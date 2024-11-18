@@ -1,0 +1,22 @@
+query SeriesByPublication($host: String!) {
+  publication(host: $host) {
+    ...Publication
+    seriesList(first: 20) {
+      edges {
+        node {
+          ...Series
+        }
+      }
+      totalDocuments
+    }
+  }
+}
+
+query SingleSeriesByPublication($host: String!, $slug: String!) {
+  publication(host: $host) {
+    ...Publication
+    series(slug: $slug) {
+      ...Series
+    }
+  }
+}

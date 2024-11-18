@@ -1,61 +1,50 @@
 import Cookies from 'js-cookie';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppContext } from './contexts/appContext';
 const GA_TRACKING_ID = 'G-72XG3F8LNJ'; // This is Hashnode's GA tracking ID
-const isProd = process.env.NEXT_PUBLIC_MODE === 'production';
+const isProd = process.env.NODE_ENV === 'production';
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 export const Analytics = () => {
 	const { publication, post, page } = useAppContext();
 
-	const _sendPageViewsToHashnodeGoogleAnalytics = () => {
-		// @ts-ignore
-		window.gtag('config', GA_TRACKING_ID, {
+	const _sendPageViewsToHashnodeGoogleAnalytics = useCallback(() => {
+		if (typeof window === 'undefined') return;
+
+		const gaTrackingID = publication?.integrations?.gaTrackingID;
+		if (!gaTrackingID) return;
+
+		window.gtag('js', new Date().toISOString());
+		window.gtag('config', gaTrackingID);
+	}, [publication?.integrations?.gaTrackingID]);
+
+	const _sendViewsToHashnodeInternalAnalytics = useCallback(() => {
+		if (typeof window === 'undefined') return;
+
+		const gaTrackingID = publication?.integrations?.gaTrackingID;
+		if (!gaTrackingID) return;
+
+		const userID = Cookies.get('userID');
+		if (!userID) {
+			Cookies.set('userID', uuidv4(), {
+				expires: 365,
+				secure: true,
+				sameSite: 'strict',
+			});
+		}
+
+		window.gtag('config', gaTrackingID, {
 			transport_url: 'https://ping.hashnode.com',
 			first_party_collection: true,
 		});
-	};
+	}, [publication?.integrations?.gaTrackingID]);
 
-	const _sendViewsToHashnodeInternalAnalytics = async () => {
-		// Send to Hashnode's own internal analytics
-		const event: Record<string, string | number | object> = {
-			event_type: 'pageview',
-			time: new Date().getTime(),
-			event_properties: {
-				hostname: window.location.hostname,
-				url: window.location.pathname,
-				eventType: 'pageview',
-				publicationId: publication.id,
-				dateAdded: new Date().getTime(),
-				referrer: window.document.referrer,
-			},
-		};
-
-		let deviceId = Cookies.get('__amplitudeDeviceID');
-		if (!deviceId) {
-			deviceId = uuidv4();
-			Cookies.set('__amplitudeDeviceID', deviceId, {
-				expires: 365 * 2,
-			}); // expire after two years
-		}
-
-		event['device_id'] = deviceId;
-
-		await fetch(`${BASE_PATH}/ping/data-event`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ events: [event] }),
-		});
-	};
-
-	function _sendViewsToAdvancedAnalyticsDashboard() {
-		const publicationId = publication.id;
-		const postId = post && post.id;
-		const staticPageId = page && page.id;
+	const _sendViewsToAdvancedAnalyticsDashboard = useCallback(async () => {
+		const publicationId = publication?.id;
+		const postId = post?.id;
+		const staticPageId = page?.id;
 
 		const data = {
 			publicationId,
@@ -125,7 +114,7 @@ export const Analytics = () => {
 				keepalive: true,
 			});
 		}
-	}
+	}, [publication?.id, post?.id, page?.id]);
 
 	useEffect(() => {
 		if (!isProd) return;
@@ -133,7 +122,11 @@ export const Analytics = () => {
 		_sendPageViewsToHashnodeGoogleAnalytics();
 		_sendViewsToHashnodeInternalAnalytics();
 		_sendViewsToAdvancedAnalyticsDashboard();
-	}, []);
+	}, [
+		_sendPageViewsToHashnodeGoogleAnalytics,
+		_sendViewsToHashnodeInternalAnalytics,
+		_sendViewsToAdvancedAnalyticsDashboard,
+	]);
 
 	return null;
 };

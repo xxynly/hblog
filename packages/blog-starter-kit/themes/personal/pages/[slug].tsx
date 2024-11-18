@@ -53,7 +53,7 @@ const Post = ({ publication, post }: PostProps) => {
 		<li key={tag.id}>
 			<Link
 				href={`/tag/${tag.slug}`}
-				className="block rounded-full border px-2 py-1 font-medium hover:bg-slate-50 dark:border-neutral-800 dark:hover:bg-neutral-800 md:px-4"
+				className="inline-block rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
 			>
 				#{tag.slug}
 			</Link>
@@ -67,22 +67,12 @@ const Post = ({ publication, post }: PostProps) => {
 	}
 
 	useEffect(() => {
-		if (screen.width <= 425) {
-			setMobMount(true);
-		}
-
-		if (!post) {
-			return;
-		}
-
-		// TODO:
-		// More of an alert, did this below to wrap async funcs inside useEffect
 		(async () => {
 			await loadIframeResizer();
 			triggerCustomWidgetEmbed(post.publication?.id.toString());
 			setCanLoadEmbeds(true);
 		})();
-	}, []);
+	}, [post]);
 
 	const coverImageSrc = !!post.coverImage?.url
 		? resizeImage(post.coverImage.url, {
@@ -128,25 +118,36 @@ const Post = ({ publication, post }: PostProps) => {
 				/>
 				<style dangerouslySetInnerHTML={{ __html: highlightJsMonokaiTheme }}></style>
 			</Head>
-			<h1 className="text-4xl font-bold leading-tight tracking-tight text-black dark:text-white">
-				{post.title}
-			</h1>
-			<div className="flex tracking-tight gap-2 text-neutral-600 dark:text-neutral-400">
-				<DateFormatter dateString={post.publishedAt} />
-				{'•'}
-				<span>{post.readTimeInMinutes} min read</span>
-			</div>
-			{!!coverImageSrc && (
-				<div className="w-full">
-					<CoverImage title={post.title} priority={true} src={coverImageSrc} />
+			<article className="mx-auto max-w-2xl">
+				<header className="mb-8 space-y-6">
+					<h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-4xl">
+						{post.title}
+					</h1>
+					<div className="flex flex-wrap items-center gap-x-3 text-sm text-slate-500 dark:text-slate-400">
+						<span className="font-medium text-slate-700 dark:text-slate-300">{post.author.name}</span>
+						<span>·</span>
+						<DateFormatter dateString={post.publishedAt} />
+						<span>·</span>
+						<span>{post.readTimeInMinutes} min read</span>
+					</div>
+				</header>
+
+				{!!coverImageSrc && (
+					<div className="-mx-4 mb-8 overflow-hidden md:mx-0 md:rounded-lg">
+						<CoverImage title={post.title} priority={true} src={coverImageSrc} />
+					</div>
+				)}
+
+				<div className="prose prose-slate mx-auto dark:prose-invert">
+					<MarkdownToHtml contentMarkdown={post.content.markdown} />
 				</div>
-			)}
-			<MarkdownToHtml contentMarkdown={post.content.markdown} />
-			{(post.tags ?? []).length > 0 && (
-				<div className="mx-auto w-full text-slate-600 dark:text-neutral-300 md:max-w-screen-md">
-					<ul className="flex flex-row flex-wrap items-center gap-2">{tagsList}</ul>
-				</div>
-			)}
+
+				{(post.tags ?? []).length > 0 && (
+					<div className="mt-8 flex flex-wrap gap-2">
+						{tagsList}
+					</div>
+				)}
+			</article>
 		</>
 	);
 };

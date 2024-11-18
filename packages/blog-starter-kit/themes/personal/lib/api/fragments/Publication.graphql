@@ -1,51 +1,84 @@
 fragment Publication on Publication {
-	id
-	title
-	displayTitle
-	url
-	metaTags
-	favicon
-	isTeam
-	followersCount
-	descriptionSEO
-	author {
-		name
-		username
-		profilePicture
-		followersCount
-	}
-	ogMetaData {
-		image
-	}
-	preferences {
-		logo
-		darkMode {
-			logo
-		}
-		navbarItems {
-			id
-			type
-			label
-			url
-		}
-	}
-	links {
-		twitter
-		github
-		linkedin
-		hashnode
-	}
-	integrations {
-		umamiWebsiteUUID
-		gaTrackingID
-		fbPixelID
-		hotjarSiteID
-		matomoURL
-		matomoSiteID
-		fathomSiteID
-		gTagManagerID
-		fathomCustomDomain
-		fathomCustomDomainEnabled
-		plausibleAnalyticsEnabled
-	}
+  id
+  title
+  displayTitle
+  url
+  urlPattern
+  metaTags
+  favicon
+  isTeam
+  about {
+    html
+  }
+  descriptionSEO
+  ogMetaData {
+    image
+  }
+  features {
+    newsletter {
+      isEnabled
+    }
+    readTime {
+      isEnabled
+    }
+    textSelectionSharer {
+      isEnabled
+    }
+  }
+  author {
+    id
+    name
+    username
+    profilePicture
+    tagline
+    bio {
+      html
+    }
+    socialMediaLinks {
+      twitter
+      github
+      website
+      linkedin
+      facebook
+      youtube
+      instagram
+      stackoverflow
+    }
+  }
+  preferences {
+    logo
+    darkMode {
+      logo
+    }
+    navbarItems {
+      id
+      type
+      label
+      url
+    }
+    enabledPages {
+      badges
+      newsletter
+      members
+    }
+    layout
+  }
+  links {
+    twitter
+    github
+    linkedin
+    website
+    hashnode
+  }
+  integrations {
+    umamiWebsiteUUID
+    gaTrackingID
+    fbPixelID
+    hotjarSiteID
+    matomoURL
+    matomoSiteID
+    fathomSiteID
+    fathomCustomDomain
+    plausibleAnalyticsEnabled
+  }
 }

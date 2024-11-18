@@ -1,0 +1,17 @@
+fragment Series on Series {
+  id
+  name
+  slug
+  description {
+    text
+  }
+  coverImage
+  posts(first: 20) {
+    edges {
+      node {
+        ...Post
+      }
+    }
+    totalDocuments
+  }
+}

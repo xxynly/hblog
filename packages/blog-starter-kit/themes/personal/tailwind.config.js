@@ -14,35 +14,55 @@ module.exports = {
 				cyan: '#79FFE1',
 				primary: colors.blue,
 			},
-			typography: () => ({
+			typography: (theme) => ({
 				DEFAULT: {
-				  css: {
-					'div[data-node-type="callout"]': {
-					  display: 'flex',
-					  'justify-content': 'flex-start',
-					  'align-items': 'flex-start',
-					  'background-color': '#F8FAFC',
-					  border: '1px solid #E2E8F0',
-					  padding: ' 1rem 1.5rem',
-					  gap: '0.5rem',
-					  'border-radius': '0.5rem',
-					  margin: '1rem 0',
-					  'word-break': 'break-word',
+					css: {
+						'div[data-node-type="callout"]': {
+							display: 'flex',
+							'justify-content': 'flex-start',
+							'align-items': 'flex-start',
+							'background-color': '#F8FAFC',
+							border: '1px solid #E2E8F0',
+							padding: ' 1rem 1.5rem',
+							gap: '0.5rem',
+							'border-radius': '0.5rem',
+							margin: '1rem 0',
+							'word-break': 'break-word',
+						},
+						'div[data-node-type="callout"] > p': {
+							margin: 0,
+						},
+						'div[data-node-type="embed"]': {
+							margin: '2rem 0',
+						},
+						code: {
+							color: theme('colors.pink.500'),
+							'&::before': {
+								content: '""',
+							},
+							'&::after': {
+								content: '""',
+							},
+						},
+						'code::before': {
+							content: '""',
+						},
+						'code::after': {
+							content: '""',
+						},
 					},
-					'div[data-node-type="callout-emoji"]': {
-					  background: '#E2E8F0',
-					  'border-radius': '0.5rem',
-					  minWidth: '1.75rem',
-					  width: '1.75rem',
-					  height: '1.5rem',
-					  display: 'flex',
-					  'margin-top': '0.3rem',
-					  'justify-content': 'center',
-					  'align-items': 'center',
-					  'font-size': '1rem',
-					}
-				  },
-				}
+				},
+				invert: {
+					css: {
+						'div[data-node-type="callout"]': {
+							'background-color': '#1E293B',
+							border: '1px solid #334155',
+						},
+						code: {
+							color: theme('colors.pink.400'),
+						},
+					},
+				},
 			}),
 			spacing: {
 				28: '7rem',
@@ -60,8 +80,8 @@ module.exports = {
 				'8xl': '6.25rem',
 			},
 			boxShadow: {
-				sm: '0 5px 10px rgba(0, 0, 0, 0.12)',
-				md: '0 8px 30px rgba(0, 0, 0, 0.12)',
+				small: '0 5px 10px rgba(0, 0, 0, 0.12)',
+				medium: '0 8px 30px rgba(0, 0, 0, 0.12)',
 			},
 		},
 	},
