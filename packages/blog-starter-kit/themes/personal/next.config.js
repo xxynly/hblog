@@ -83,11 +83,11 @@ const config = {
 			},
       {
         source: "/blog",
-        destination: "https://starter-kit-rose-seven.vercel.app/blog", -> Replace https://starter-kit-rose-seven.vercel.app with your own Vercel deployment URL from step 1
+        destination: "https://starter-kit-neon.vercel.app/blog",
       },
       {
         source: "/blog/:path*",
-        destination: "https://starter-kit-rose-seven.vercel.app/blog/:path*", -> Replace https://starter-kit-rose-seven.vercel.app with your own Vercel deployment URL from step 1
+        destination: "https://starter-kit-neon.vercel.app/blog/:path*", 
       },
 		];
 	},
