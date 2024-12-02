@@ -24,7 +24,7 @@
   </a>
 </p>
 
-**[超详细部署教程](https://blog.duizhang.fun/)**    
+**[超详细部署教程](https://blog.duizhang.fun/blog)**    
 
 <h2 id="english">English</h2>
 
