@@ -24,6 +24,8 @@
   </a>
 </p>
 
+**[超详细部署教程](https://blog.duizhang.fun/)**    
+
 <h2 id="english">English</h2>
 
 ## 🌟 Features
