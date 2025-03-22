@@ -50,7 +50,7 @@ function BlogPostPreview(props: {
 
   return (
     <div
-      className={twJoin('blog-post-card mb-16', layout === 'grid' ? 'px-4 lg:w-1/2 lg:px-8' : 'px-4 lg:px-16')}
+      className={twJoin('blog-post-card mb-16 max-w-4xl mx-auto', layout === 'grid' ? 'px-4 lg:w-1/2 lg:px-8' : 'px-4 lg:px-16')}
       key={post.id}
     >
       {layout !== 'grid' && post.id === pinnedPostId && (
@@ -66,7 +66,7 @@ function BlogPostPreview(props: {
         )}
       >
         <div className={layout === 'grid' ? 'w-full' : 'lg:w-3/5'}>
-          <h1 className="blog-post-card-title mb-3 break-words font-heading text-2xl font-bold leading-tight text-slate-900 dark:text-white lg:text-3xl">
+          <h1 className="blog-post-card-title mb-3 break-words font-heading text-2xl font-bold leading-tight text-slate-900 dark:text-white lg:text-3xl overflow-hidden">
             <Link href={postURL} aria-label={post.title} onMouseOver={preload} onFocus={() => undefined}>
               {post.title}
             </Link>
@@ -121,7 +121,7 @@ function BlogPostPreview(props: {
               </Link>
             ) : null}
           </div>
-          <p className="blog-post-card-brief block w-full break-words text-lg leading-snug text-slate-700 hn-break-words dark:text-slate-400">
+          <p className="blog-post-card-brief block w-full break-words text-lg leading-snug text-slate-700 hn-break-words dark:text-slate-400 overflow-hidden">
             <Link href={postURL} aria-label={post.title} onMouseOver={preload} onFocus={() => undefined}>
               {postBrief}
             </Link>

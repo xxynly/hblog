@@ -18,6 +18,7 @@ import { Footer } from '../components/footer';
 import { Layout } from '../components/layout';
 import { MarkdownToHtml } from '../components/markdown-to-html';
 import { PersonalHeader } from '../components/personal-theme-header';
+import { ReadProgress } from '../components/read-progress';
 import {
 	PageByPublicationDocument,
 	PostFullFragment,
@@ -118,7 +119,7 @@ const Post = ({ publication, post }: PostProps) => {
 				/>
 				<style dangerouslySetInnerHTML={{ __html: highlightJsMonokaiTheme }}></style>
 			</Head>
-			<article className="mx-auto max-w-2xl">
+			<article className="mx-auto max-w-5xl rounded-lg bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
 				<header className="mb-8 space-y-6">
 					<h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-4xl">
 						{post.title}
@@ -172,12 +173,13 @@ export default function PostOrPage(props: Props) {
 	return (
 		<AppProvider publication={publication} post={maybePost} page={maybePage}>
 			<Layout>
-				<Container className="mx-auto flex max-w-3xl flex-col items-stretch gap-10 px-5 py-10">
+				{props.type === 'post' && <ReadProgress />}
+				<Container className="mx-auto flex max-w-5xl flex-col items-stretch gap-10 px-5 py-10">
 					<PersonalHeader />
-					<article className="flex flex-col items-start gap-10 pb-10">
+					<div className="flex flex-col items-start gap-10 pb-10">
 						{props.type === 'post' && <Post {...props} />}
 						{props.type === 'page' && <Page {...props} />}
-					</article>
+					</div>
 					<Footer />
 				</Container>
 			</Layout>

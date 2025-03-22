@@ -36,7 +36,6 @@ type Props = {
 };
 
 const PostFloatingMenu = dynamic(() => import('./post-floating-bar'), { ssr: false });
-const PostCommentsSidebar = dynamic(() => import('./post-comments-sidebar'), { ssr: false });
 
 const PublicationSubscribeStandOut = dynamic(() => import('./publication-subscribe-standout'), {
 	ssr: false,
@@ -115,8 +114,8 @@ export const PostHeader = ({ post, morePosts }: Props) => {
 	const authorsArray = [post.author, ...(post.coAuthors || [])];
 	return (
 		<Fragment>
-			<div className="blog-article-page container relative mx-auto grid grid-cols-8">
-				<div className="col-span-full lg:col-span-6 lg:col-start-2">
+			<div className="blog-article-page container relative mx-auto grid grid-cols-12 gap-4 max-w-4xl">
+				<div className="col-span-12 mx-auto w-full max-w-4xl">
 					{/* Top cover */}
 					{post.coverImage?.url && !post.preferences.stickCoverToBottom && (
 						<div className="relative">
@@ -147,18 +146,18 @@ export const PostHeader = ({ post, morePosts }: Props) => {
 					{/* Article title */}
 					<div
 						className={twJoin(
-							`font-heading mt-6 break-words px-4 text-center text-3xl font-extrabold text-slate-900 dark:text-white md:mt-10 md:px-5 md:text-4xl lg:px-8 xl:px-20 xl:text-5xl`,
+							`font-heading mt-6 break-words px-4 text-center text-3xl font-extrabold text-slate-900 dark:text-white md:mt-10 md:px-5 md:text-4xl lg:px-8 xl:text-5xl max-w-4xl mx-auto`,
 							post.subtitle ? `mb-5` : `mb-8 md:mb-14`,
 						)}
 					>
-						<h1 className="leading-snug" data-query="post-title">
+						<h1 className="leading-snug overflow-hidden" data-query="post-title">
 							{post.title}
 						</h1>
 					</div>
 
 					{/* Article subtitle */}
 					{post.subtitle && (
-						<div className="font-heading mb-8 px-4 text-center md:mb-14 md:px-5 lg:px-8 xl:px-20">
+						<div className="font-heading mb-8 px-4 text-center md:mb-14 md:px-5 lg:px-8 max-w-4xl mx-auto">
 							<h2 className="text-2xl leading-snug text-slate-700 dark:text-slate-400 md:text-3xl xl:text-3xl">
 								{post.subtitle}
 							</h2>
@@ -261,8 +260,8 @@ export const PostHeader = ({ post, morePosts }: Props) => {
 					)}
 				</div>
 			</div>
-			<div className="blog-content-wrapper article-main-wrapper container relative z-30 mx-auto grid grid-flow-row grid-cols-8 xl:gap-6 2xl:grid-cols-10">
-				<section className="blog-content-main z-20 col-span-8 mb-10 px-4 md:z-10 lg:col-span-6 lg:col-start-2 lg:px-0 xl:col-span-6 xl:col-start-2 2xl:col-span-6 2xl:col-start-3">
+			<div className="blog-content-wrapper article-main-wrapper container relative z-30 mx-auto grid grid-cols-12 gap-4 max-w-4xl">
+				<section className="blog-content-main z-20 col-span-12 mb-10 px-4 md:z-10 lg:px-0 max-w-4xl mx-auto w-full">
 					<div className="relative">
 						{post.features?.tableOfContents?.isEnabled && post.features?.tableOfContents?.items?.length > 0 && <TocRenderDesign list={toc} />}
 
@@ -273,7 +272,7 @@ export const PostHeader = ({ post, morePosts }: Props) => {
 								<div
 									id="post-content-wrapper"
 									ref={postContentEle}
-									className="prose prose-lg min-h-30 dark:prose-dark xl:prose-xl mx-auto mb-10 break-words"
+									className="prose prose-lg min-h-30 dark:prose-dark xl:prose-xl mx-auto mb-10 break-words max-w-4xl overflow-hidden"
 									// eslint-disable-next-line react/no-danger
 									dangerouslySetInnerHTML={{
 										__html: memoizedPostContent,

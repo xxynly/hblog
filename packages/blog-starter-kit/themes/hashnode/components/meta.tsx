@@ -20,6 +20,7 @@ export const Meta = () => {
 	return (
 		<Head>
 			{favicon ? <link rel="icon" type="image/png" href={favicon} /> : defaultFavicons}
+			<meta name="google-adsense-account" content="ca-pub-5746299111839555" />
 			<meta name="msapplication-config" content="/favicon/browserconfig.xml" />
 			<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
 			{metaTags && parse(metaTags)}
