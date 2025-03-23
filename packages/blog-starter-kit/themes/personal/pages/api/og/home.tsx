@@ -80,6 +80,7 @@ export default async function handler(req: NextRequest) {
 								<img
 									tw="w-full"
 									alt="name"
+									// This is an OG image API route using @vercel/og, native img tag is correct here
 									src={resizeImage(photo, { w: 400, h: 400, c: 'face' })}
 								/>
 							</div>
