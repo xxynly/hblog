@@ -24,7 +24,9 @@ export const PostComments = () => {
 				<div className="flex items-center">
 					<Avatar
 						name={comment.author.name}
+						username={comment.author.username}
 						picture={comment.author.profilePicture}
+						size={32}
 					/>
 					<div className="ml-2">
 						<p className="text-sm font-medium text-slate-900 dark:text-white">{comment.author.name}</p>
